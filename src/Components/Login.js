@@ -4,10 +4,10 @@ import { checkValidData } from "../utils/Validation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/Firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateProfile } from "firebase/auth";
 import { addUser } from "../utils/userSlice";
+import { USERICON_URL, BACKGROUNG_URL } from "../utils/constant";
 
 const Login = () => {
   const [isSignInform, setisSignInform] = useState(true);
@@ -16,8 +16,6 @@ const Login = () => {
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
-
-  const nevigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -37,8 +35,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              "https://occ-0-2164-3466.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABXz4LMjJFidX8MxhZ6qro8PBTjmHbxlaLAbk45W1DXbKsAIOwyHQPiMAuUnF1G24CLi7InJHK4Ge4jkXul1xIW49Dr5S7fc.png?r=e6e",
+            photoURL: USERICON_URL,
           })
             .then(() => {
               // Profile updated!
@@ -51,7 +48,6 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              nevigate("/browse");
             })
             .catch((error) => {
               // An error occurred
@@ -73,7 +69,6 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
-          nevigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -91,7 +86,7 @@ const Login = () => {
       <Header />
       <img
         className=" absolute"
-        src="https://assets.nflxext.com/ffe/siteui/vlv3/9d3533b2-0e2b-40b2-95e0-ecd7979cc88b/a3873901-5b7c-46eb-b9fa-12fea5197bd3/IN-en-20240311-popsignuptwoweeks-perspective_alpha_website_large.jpg"
+        src={BACKGROUNG_URL}
         alt="background"
       />
       <form
